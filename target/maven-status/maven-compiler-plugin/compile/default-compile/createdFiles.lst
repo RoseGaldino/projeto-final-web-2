@@ -1,0 +1,12 @@
+modelo\Venda.class
+persistencia\JPAUtil.class
+persistencia\ClienteDAO.class
+modelo\SituacaoVenda.class
+modelo\VendaProduto.class
+persistencia\CriarAtualizarBanco.class
+persistencia\DAO.class
+modelo\Produto.class
+modelo\Cliente.class
+persistencia\VendaDAO.class
+persistencia\UsuarioDAO.class
+modelo\Usuario.class

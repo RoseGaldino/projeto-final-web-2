@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="template.xhtml">
+
+        <f:metadata>
+            <f:viewParam name="produtoId" value="#{produtoBean.produtoId}" />
+            <f:viewAction action="#{produtoBean.carregarProdutoPelaId()}" if="#{param.produtoId != null}" />
+        </f:metadata>
+
+        <ui:define name="titulo">
+            Produtos
+        </ui:define>
+
+        <ui:define name="cabecalho">
+            Produto
+        </ui:define>
+
+        <ui:define name="conteudo">
+            <h:form id="produto">
+                <p:fieldset legend="Dados do Produto">
+                    <h:panelGrid columns="3">
+
+                        <p:outputLabel value="Nome" for="nome" />
+                        <p:inputText id="nome" value="#{produtoBean.produto.nome}"
+                                     required="true">
+                            <f:validateLength minimum="3" />
+                            <f:ajax event="blur" render="messageNome" />
+                        </p:inputText>
+                        <p:message for="nome" id="messageNome" />
+
+                        <p:outputLabel value="Preco" for="preco" />
+                        <p:inputText id="preco" value="#{produtoBean.produto.preco}"
+                                     required="true">
+                            
+                            <f:ajax event="blur" render="messagePreco" />
+                        </p:inputText>
+                        <p:message for="nome" id="messagePreço" />
+
+                        <p:commandButton value="Gravar" action="#{produtoBean.gravar()}" 
+                                         process="@form" update="@form :formTabelaProduto" />
+                    </h:panelGrid>
+                </p:fieldset>
+            </h:form>
+
+            <h:form id="formTabelaProduto">
+                <p:dataTable value="#{produtoBean.produtos}" var="produto" >
+                    <f:facet name="header">
+                        Produtos
+                    </f:facet>
+
+                    <f:facet name="header">
+                        Comandos
+                    </f:facet>
+
+                    <p:column>#{produto.nome}</p:column>
+
+                    <p:column>
+                        <p:commandButton value="Atualizar" action="#{produtoBean.atualizar()}" process="@form" update="@form :produto"/>
+                        <p:commandButton value="Remover" action="#{produtoBean.remover(produto)}" update="@form :produto" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>		
+        </ui:define>
+
+    </ui:composition>
+
+</html>
